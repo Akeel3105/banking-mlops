@@ -1,0 +1,40 @@
+name: CI → Render Deploy
+
+on:
+  push:
+    branches: ["main"]
+
+concurrency:
+  group: render-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install app deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # Optional: uncomment next line if you added tests
+          # pip install pytest
+
+      # Optional smoke test (remove if you have no tests)
+      # - name: Run tests
+      #   run: pytest -q
+
+  trigger-render:
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Deploy
+        run: |
+          curl -fsS -X POST "${{ secrets.https://api.render.com/deploy/srv-d2mhhq0gjchc73cl9nlg?key=eWEmA9iuu8Y }}"

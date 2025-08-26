@@ -4,3 +4,11 @@ scikit-learn
 joblib
 numpy
 xgboost
+
+
+#docker run -d --name bank-ml -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
+
+#docker build -t bank-mlops .
+
+# Run new container
+#docker run -d --name bank-mlops -p 8501:8501 bank-mlops
