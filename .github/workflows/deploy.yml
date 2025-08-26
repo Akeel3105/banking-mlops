@@ -37,4 +37,4 @@ jobs:
     steps:
       - name: Trigger Render Deploy
         run: |
-          curl -fsS -X POST "${{ secrets.https://api.render.com/deploy/srv-d2mhhq0gjchc73cl9nlg?key=eWEmA9iuu8Y }}"
+          curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
